@@ -83,11 +83,11 @@ export default function SorollApp() {
 
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center text-white bg-black text-center p-4">
-      {page === 0 && <img src="/logo.png" className="w-48" alt="Soroll" />}
+      {page === 0 && <img src="https://github.com/user-attachments/assets/227b3993-4c9b-43bb-abab-ab2e250a23e3" className="w-48" alt="Soroll" />}
       {page === 1 && (
         <>
           <div className="absolute top-4 left-4">
-            <img src="/logo.png" className="w-12" alt="Soroll" />
+            <img src="https://github.com/user-attachments/assets/ae0df648-3034-43b9-837c-cbb478d78c7b" className="w-12" alt="Soroll" />
           </div>
           <h1 className="text-2xl">Quan va ser la ultima vegada que vas notar el silenci?</h1>
         </>
