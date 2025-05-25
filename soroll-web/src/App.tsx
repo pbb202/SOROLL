@@ -3,7 +3,7 @@ import "./App.css";
 
 const MAX_SCORE = 5;
 // POL: Canviar el volum global
-const AUDIO_VOLUME = 0.05;
+const AUDIO_VOLUME = 0.5;
 
 const Logo = () => (
   <div className="absolute top-4 left-4">
@@ -190,7 +190,7 @@ export default function SorollApp() {
           newAudio.loop = true;
 
           /*POL: To change the volume of the colapse question (Change the 1)*/
-          newAudio.volume = 1 * AUDIO_VOLUME;
+          newAudio.volume = 2 * AUDIO_VOLUME;
           newAudio.play().catch(console.error);
         } else {
           setQuestionnairePage((page) => page + 1);
@@ -301,37 +301,37 @@ export default function SorollApp() {
       <QuestionnairePage
         page={0}
         text="Vas de forma habitual a la discoteca?"
-        volume={1}
+        volume={0.75}
       />
       <QuestionnairePage
         page={1}
         text="Escoltes música a través d’altaveus pel carrer o en espais públics?"
-        volume={1}
+        volume={0.5}
       />
       <QuestionnairePage
         page={2}
         text="Participes o organitzes botellots o trobades sorolloses en espais públics?"
-        volume={1}
+        volume={1.5}
       />
       <QuestionnairePage
         page={3}
         text="Conduint, acceleres fort i ràpid encara que no sigui necessari?"
-        volume={1}
+        volume={1.5}
       />
       <QuestionnairePage
         page={4}
         text="Poses música a tot volum quan condueixes?"
-        volume={1}
+        volume={2}
       />
       <QuestionnairePage
         page={5}
         text="Fas servir petards o coets durant festes o celebracions?"
-        volume={1}
+        volume={1.75}
       />
       <QuestionnairePage
         page={6}
         text="Utilitzes el mòbil parlant en veu molt alta en espais tancats (cafeteries, vagons de tren, sales d’espera...)?"
-        volume={1}
+        volume={0.7}
       />
       <QuestionnairePage
         page={7}
@@ -341,12 +341,12 @@ export default function SorollApp() {
       <QuestionnairePage
         page={8}
         text="Asisteixes de forma habitual a concerts o festivals de musica?"
-        volume={1}
+        volume={0.8}
       />
       <QuestionnairePage
         page={9}
         text="Fas servir la moto o el cotxe amb el tub d’escapament modificat o molt sorollós?"
-        volume={1}
+        volume={0.7}
       />
       <QuestionnairePage
         page={10}
@@ -366,7 +366,7 @@ export default function SorollApp() {
       <QuestionnairePage
         page={13}
         text="Quan tens reunions familiars o amb amics, us adoneu si esteu fent massa soroll?"
-        volume={1}
+        volume={1.2}
       />
       <QuestionnairePage
         page={14}
@@ -381,7 +381,7 @@ export default function SorollApp() {
           newAudio.loop = true;
 
           // POL: To change the volume of the succes sound (change the 1)
-          newAudio.volume = 1 * AUDIO_VOLUME;
+          newAudio.volume = 2 * AUDIO_VOLUME;
           newAudio.play().catch(console.error);
         }}
         volume={1}
