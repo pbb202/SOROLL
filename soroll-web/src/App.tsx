@@ -90,8 +90,8 @@ export default function SorollApp() {
           return (
             <div>
               <div className="flex flex-col gap-y-2">
-                <h2 className="text-xl mb-4">El sistema ha colapsat</h2>
-                <h3>Desitges reinicar el sistema?</h3>
+                <h2 className="text-6xl">El sistema ha colapsat</h2>
+                <h3 className="text-4xl">Desitges reinicar el sistema?</h3>
               </div>
             </div>
           );
@@ -105,7 +105,7 @@ export default function SorollApp() {
         }
         case 2: {
           return (
-            <p>
+            <p className="text-4xl px-26 leading-12">
               La contaminació acústica a Barcelona és un problema de salut
               pública. Segons l’Atles de Resiliència de l’Ajuntament de
               Barcelona, durant el dia els nivells de soroll oscil·len entre 55
@@ -116,7 +116,7 @@ export default function SorollApp() {
           );
         }
         case 3: {
-          return <>El silenci parla. Escolta</>;
+          return <p className="text-6xl">El silenci parla. Escolta</p>;
         }
         default: {
           return null;
@@ -167,7 +167,7 @@ export default function SorollApp() {
       <>
         <Logo />
         <div>
-          <h2 className="text-xl mb-4">{text}</h2>
+          <h2 className="text-4xl mb-4">{text}</h2>
         </div>
       </>
     );
@@ -227,17 +227,19 @@ export default function SorollApp() {
         page={2}
         onPageChange={() => setQuestionnairePage(0)}
       >
-        <div>
-          <h2 className="text-xl mb-4">COM NAVEGAR</h2>
-          <p>Avançar: Premeu la tecla espai</p>
-          <p>per passar a la següent pàgina.</p>
+        <div className="flex flex-col gap-y-0">
+          <h2 className="text-4xl">COM NAVEGAR</h2>
+          <p className="text-2xl">Avançar: Premeu la tecla espai</p>
+          <p className="text-2xl">per passar a la següent pàgina.</p>
           <br />
-          <h2 className="text-xl mb-4">COM RESPONDRE</h2>
-          <p>SI Premeu la fletxa dreta.</p>
-          <p>NO Premeu la fletxa esquerra.</p>
+          <h2 className="text-4xl">COM RESPONDRE</h2>
+          <p className="text-2xl">SI Premeu la fletxa dreta.</p>
+          <p className="text-2xl">NO Premeu la fletxa esquerra.</p>
           <br />
-          <h2 className="text-xl mb-4">CONFIGURACIÓ SONORA</h2>
-          <p>Ajusta el volum al màxim durant tota l’experiència.</p>
+          <h2 className="text-4xl">CONFIGURACIÓ SONORA</h2>
+          <p className="text-2xl">
+            Ajusta el volum al màxim durant tota l’experiència.
+          </p>
         </div>
       </NonQuestionairePage>
       <QuestionnairePage
@@ -307,7 +309,7 @@ export default function SorollApp() {
       {successPage ? (
         <>
           <Logo />
-          <p>
+          <p className="text-6xl">
             Enhorabona! Gràcies per contribuir a un entorn més tranquil i
             saludable.
           </p>

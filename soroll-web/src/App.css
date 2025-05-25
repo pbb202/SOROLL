@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Makina';
+  src: url('https://raw.githubusercontent.com/pbb202/SOROLL/refs/heads/main/soroll-web/src/assets/fonts/29lt-makina-regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply to your app */
+body {
+  font-family: 'Makina', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Or create utility classes */
+.makina-font {
+  font-family: 'Makina', sans-serif;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
