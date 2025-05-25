@@ -206,8 +206,20 @@ export default function SorollApp() {
     return (
       <>
         <Logo />
-        <div>
-          <h2 className="text-4xl mb-4">{text}</h2>
+        <div className="relative w-full">
+          <div className="absolute w-40 left-0 overflow-x-hidden z-0">
+            <img
+              className="rotate-180 -translate-x-1/2"
+              src="https://github.com/user-attachments/assets/429393ac-7933-4ece-a944-51079a867082"
+            />
+          </div>
+          <h2 className="text-4xl z-1 px-16">{text}</h2>
+          <div className="absolute w-40 right-0 top-0 overflow-x-hidden z-0">
+            <img
+              src="https://github.com/user-attachments/assets/6113b49c-e1ce-4264-9b6e-92597902ce6e"
+              className="rotate-180 translate-x-1/2"
+            />
+          </div>
         </div>
       </>
     );
