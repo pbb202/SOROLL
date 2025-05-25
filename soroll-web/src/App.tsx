@@ -1,7 +1,8 @@
-import { useEffect, useState, type JSX } from "react";
+import { useEffect, useRef, useState, type JSX } from "react";
 import "./App.css";
 
 const MAX_SCORE = 5;
+const AUDIO_VOLUME = 0.05;
 
 const Logo = () => (
   <div className="absolute top-4 left-4">
@@ -55,6 +56,16 @@ export default function SorollApp() {
   const [collapsedSystemPage, setCollapsedSystemPage] = useState(-1);
   const [successPage, setSuccessPage] = useState(false);
   const [score, setScore] = useState(0);
+  // Store all audio instances to control them together
+  const audioInstancesRef = useRef<HTMLAudioElement[]>([]);
+
+  const stopAllAudio = () => {
+    audioInstancesRef.current.forEach((audio) => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+    audioInstancesRef.current = []; // Clear the array
+  };
 
   const CollapsedSystemPage = () => {
     const SECONDS_LOADING_BAR = 5;
@@ -136,33 +147,62 @@ export default function SorollApp() {
     page,
     text,
     onPageChange,
+    volume,
   }: {
     page: number;
     text: string;
     onPageChange?: () => void;
+    volume: number;
   }) => {
+    // Define your audio URLs based on page number
+    const getAudioPreguntaUrl = (pageNumber: number) => {
+      // Since your example URL was for page 0, we add 1 to get the correct file number
+      const fileNumber = pageNumber + 1;
+      return `https://raw.githubusercontent.com/pbb202/SOROLL/refs/heads/main/AUDIOS/PREGUNTA%20${fileNumber}.mp3`;
+    };
+
     useEffect(() => {
       if (page !== questionnairePage) return;
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const handleKey = (e: KeyboardEvent) => {
-        if (e.code === "ArrowRight") setScore((score) => score + 1);
+        if (e.code === "ArrowRight") {
+          setScore((score) => score + 1);
+
+          const overlayAudioUrl = getAudioPreguntaUrl(page);
+          const newAudio = new Audio(overlayAudioUrl);
+          newAudio.loop = true;
+          newAudio.volume = volume * AUDIO_VOLUME;
+          newAudio.play().catch(console.error);
+
+          // Add to our collection of audio instances
+          audioInstancesRef.current.push(newAudio);
+        }
 
         if (score > MAX_SCORE) {
           setCollapsedSystemPage(0);
           setQuestionnairePage(-1);
+          stopAllAudio();
+
+          const newAudio = new Audio(
+            `https://raw.githubusercontent.com/pbb202/SOROLL/refs/heads/main/AUDIOS/SO%20COLAPSE.mp3`,
+          );
+          newAudio.loop = true;
+          newAudio.volume = AUDIO_VOLUME;
+          newAudio.play().catch(console.error);
         } else {
           setQuestionnairePage((page) => page + 1);
           if (onPageChange) onPageChange();
         }
       };
+
       window.addEventListener("keydown", handleKey);
       return () => {
         window.removeEventListener("keydown", handleKey);
       };
-    }, [onPageChange, page]);
+    }, [onPageChange, page, volume]);
 
-    if (page !== questionnairePage) return;
+    if (page !== questionnairePage) return null;
+
     return (
       <>
         <Logo />
@@ -245,63 +285,88 @@ export default function SorollApp() {
       <QuestionnairePage
         page={0}
         text="Vas de forma habitual a la discoteca?"
+        volume={1}
       />
       <QuestionnairePage
         page={1}
         text="Escoltes música a través d’altaveus pel carrer o en espais públics?"
+        volume={1}
       />
       <QuestionnairePage
         page={2}
         text="Participes o organitzes botellots o trobades sorolloses en espais públics?"
+        volume={1}
       />
       <QuestionnairePage
         page={3}
         text="Conduint, acceleres fort i ràpid encara que no sigui necessari?"
+        volume={1}
       />
       <QuestionnairePage
         page={4}
         text="Poses música a tot volum quan condueixes?"
+        volume={1}
       />
       <QuestionnairePage
         page={5}
         text="Fas servir petards o coets durant festes o celebracions?"
+        volume={1}
       />
       <QuestionnairePage
         page={6}
         text="Utilitzes el mòbil parlant en veu molt alta en espais tancats (cafeteries, vagons de tren, sales d’espera...)?"
+        volume={1}
       />
       <QuestionnairePage
         page={7}
         text="T’has barallat o cridat a l’espai públic provocant molèsties?"
+        volume={1}
       />
       <QuestionnairePage
         page={8}
         text="Asisteixes de forma habitual a concerts o festivals de musica?"
+        volume={1}
       />
       <QuestionnairePage
         page={9}
         text="Fas servir la moto o el cotxe amb el tub d’escapament modificat o molt sorollós?"
+        volume={1}
       />
       <QuestionnairePage
         page={10}
         text="Permets als teus animals de companyia bordar o fer soroll sense controlar-los?"
+        volume={1}
       />
       <QuestionnairePage
         page={11}
         text="Has participat en manifestacions o protestes?"
+        volume={1}
       />
       <QuestionnairePage
         page={12}
         text="Toques el clàxon del cotxe sovint, fins i tot quan no és estrictament necessari?"
+        volume={1}
       />
       <QuestionnairePage
         page={13}
         text="Quan tens reunions familiars o amb amics, us adoneu si esteu fent massa soroll?"
+        volume={1}
       />
       <QuestionnairePage
         page={14}
         text="Has fet festes a casa sense tenir en compte el descans dels veïns?"
-        onPageChange={() => setSuccessPage(true)}
+        onPageChange={() => {
+          setSuccessPage(true);
+          stopAllAudio();
+
+          const newAudio = new Audio(
+            `https://raw.githubusercontent.com/pbb202/SOROLL/refs/heads/main/AUDIOS/SO%20FINAL%20si%20ho%20han%20fet%20be.mp3`,
+          );
+          newAudio.loop = true;
+          newAudio.volume = AUDIO_VOLUME;
+          newAudio.play().catch(console.error);
+        }}
+        volume={1}
       />
 
       <CollapsedSystemPage />
