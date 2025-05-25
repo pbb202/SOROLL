@@ -11,5 +11,5 @@
 11. Permets als teus animals de companyia bordar o fer soroll sense controlar-los?
 12. Has participat en manifestacions o protestes?
 13. Toques el clàxon del cotxe sovint, fins i tot quan no és estrictament necessari?
-14. Quan tens reunions familiars o amb amics, us adoneu si esteu fent massa soroll?
+14. Quan tens reunions familiars o amb amics manteniu un to de veu elevat?
 15. Has fet festes a casa sense tenir en compte el descans dels veïns?
