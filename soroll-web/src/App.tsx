@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type JSX } from "react";
 import "./App.css";
 
 const MAX_SCORE = 5;
+// POL: Canviar el volum global
 const AUDIO_VOLUME = 0.05;
 
 const Logo = () => (
@@ -187,7 +188,9 @@ export default function SorollApp() {
             `https://raw.githubusercontent.com/pbb202/SOROLL/refs/heads/main/AUDIOS/SO%20COLAPSE.mp3`,
           );
           newAudio.loop = true;
-          newAudio.volume = AUDIO_VOLUME;
+
+          /*POL: To change the volume of the colapse question (Change the 1)*/
+          newAudio.volume = 1 * AUDIO_VOLUME;
           newAudio.play().catch(console.error);
         } else {
           setQuestionnairePage((page) => page + 1);
@@ -294,6 +297,7 @@ export default function SorollApp() {
           </p>
         </div>
       </NonQuestionairePage>
+      {/*POL: To change the volume of all the questions*/}
       <QuestionnairePage
         page={0}
         text="Vas de forma habitual a la discoteca?"
@@ -375,7 +379,9 @@ export default function SorollApp() {
             `https://raw.githubusercontent.com/pbb202/SOROLL/refs/heads/main/AUDIOS/SO%20FINAL%20si%20ho%20han%20fet%20be.mp3`,
           );
           newAudio.loop = true;
-          newAudio.volume = AUDIO_VOLUME;
+
+          // POL: To change the volume of the succes sound (change the 1)
+          newAudio.volume = 1 * AUDIO_VOLUME;
           newAudio.play().catch(console.error);
         }}
         volume={1}
