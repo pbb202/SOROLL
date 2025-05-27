@@ -15,6 +15,16 @@ const Logo = () => (
   </div>
 );
 
+const GratitudeLogo = () => (
+  <img
+    src="https://raw.githubusercontent.com/pbb202/SOROLL/refs/heads/main/UAB%20LOGO.jpg"
+    className="w-44"
+    alt="Soroll"
+  />
+);
+
+const GratitudePage = () => <GratitudeLogo />;
+
 const LoadingBar = ({
   seconds,
   onLoadingComplete,
@@ -55,8 +65,9 @@ export default function SorollApp() {
   const [currentPage, setPage] = useState(0);
   const [questionnairePage, setQuestionnairePage] = useState(-1);
   const [collapsedSystemPage, setCollapsedSystemPage] = useState(-1);
-  const [successPage, setSuccessPage] = useState(false);
+  const [successPage, setSuccessPage] = useState(-1);
   const [score, setScore] = useState(0);
+
   // Store all audio instances to control them together
   const audioInstancesRef = useRef<HTMLAudioElement[]>([]);
 
@@ -66,6 +77,47 @@ export default function SorollApp() {
       audio.currentTime = 0;
     });
     audioInstancesRef.current = []; // Clear the array
+  };
+
+  const SuccessPage = () => {
+    useEffect(() => {
+      if (successPage === -1) {
+        return;
+      }
+
+      const handleKey = (e: KeyboardEvent) => {
+        if (e.code === "ArrowRight") setSuccessPage(1);
+      };
+
+      const handleClick = () => {
+        setSuccessPage(1);
+      };
+
+      window.addEventListener("keydown", handleKey);
+      window.addEventListener("click", handleClick);
+
+      return () => {
+        window.removeEventListener("keydown", handleKey);
+        window.removeEventListener("click", handleClick);
+      };
+    }, []);
+
+    switch (successPage) {
+      case 0: {
+        return (
+          <>
+            <Logo />
+            <p className="text-6xl">
+              Enhorabona! Gràcies per contribuir a un entorn més tranquil i
+              saludable.
+            </p>
+          </>
+        );
+      }
+      case 1: {
+        return <GratitudePage />;
+      }
+    }
   };
 
   const CollapsedSystemPage = () => {
@@ -85,11 +137,12 @@ export default function SorollApp() {
       }
 
       const handleKey = (e: KeyboardEvent) => {
-        if (e.code === "ArrowRight") setCollapsedSystemPage((page) => page + 1);
+        if (e.code === "ArrowRight")
+          setCollapsedSystemPage((page) => Math.max(page + 1, 4));
       };
 
       const handleClick = () => {
-        setCollapsedSystemPage((page) => page + 1);
+        setCollapsedSystemPage((page) => Math.max(page + 1, 4));
       };
       window.addEventListener("keydown", handleKey);
       window.addEventListener("click", handleClick);
@@ -133,6 +186,9 @@ export default function SorollApp() {
         }
         case 3: {
           return <p className="text-6xl">El silenci parla. Escolta</p>;
+        }
+        case 4: {
+          return <GratitudePage />;
         }
         default: {
           return null;
@@ -418,7 +474,7 @@ export default function SorollApp() {
         page={14}
         text="Has fet festes a casa sense tenir en compte el descans dels veïns?"
         onPageChange={() => {
-          setSuccessPage(true);
+          setSuccessPage(0);
           stopAllAudio();
 
           const newAudio = new Audio(
@@ -435,15 +491,7 @@ export default function SorollApp() {
 
       <CollapsedSystemPage />
 
-      {successPage ? (
-        <>
-          <Logo />
-          <p className="text-6xl">
-            Enhorabona! Gràcies per contribuir a un entorn més tranquil i
-            saludable.
-          </p>
-        </>
-      ) : null}
+      <SuccessPage />
     </div>
   );
 }
