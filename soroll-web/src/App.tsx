@@ -138,11 +138,11 @@ export default function SorollApp() {
 
       const handleKey = (e: KeyboardEvent) => {
         if (e.code === "ArrowRight")
-          setCollapsedSystemPage((page) => Math.max(page + 1, 4));
+          setCollapsedSystemPage((page) => Math.min(page + 1, 4));
       };
 
       const handleClick = () => {
-        setCollapsedSystemPage((page) => Math.max(page + 1, 4));
+        setCollapsedSystemPage((page) => Math.min(page + 1, 4));
       };
       window.addEventListener("keydown", handleKey);
       window.addEventListener("click", handleClick);
@@ -174,7 +174,7 @@ export default function SorollApp() {
         }
         case 2: {
           return (
-            <p className="text-4xl px-26 leading-12">
+            <p className="text-2xl md:text-4xl px-6 md:px-26 md:leading-12">
               La contaminació acústica a Barcelona és un problema de salut
               pública. Segons l’Atles de Resiliència de l’Ajuntament de
               Barcelona, durant el dia els nivells de soroll oscil·len entre 55
