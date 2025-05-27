@@ -85,14 +85,18 @@ export default function SorollApp() {
       }
 
       const handleKey = (e: KeyboardEvent) => {
-        if (e.code === "ArrowRight") setScore((score) => score + 1);
+        if (e.code === "ArrowRight") setCollapsedSystemPage((page) => page + 1);
+      };
 
+      const handleClick = () => {
         setCollapsedSystemPage((page) => page + 1);
       };
       window.addEventListener("keydown", handleKey);
+      window.addEventListener("click", handleClick);
 
       return () => {
         window.removeEventListener("keydown", handleKey);
+        window.removeEventListener("click", handleClick);
       };
     }, []);
 
@@ -165,20 +169,7 @@ export default function SorollApp() {
     useEffect(() => {
       if (page !== questionnairePage) return;
 
-      const handleKey = (e: KeyboardEvent) => {
-        if (e.code === "ArrowRight") {
-          setScore((score) => score + 1);
-
-          const overlayAudioUrl = getAudioPreguntaUrl(page);
-          const newAudio = new Audio(overlayAudioUrl);
-          newAudio.loop = true;
-          newAudio.volume = volume * AUDIO_VOLUME;
-          newAudio.play().catch(console.error);
-
-          // Add to our collection of audio instances
-          audioInstancesRef.current.push(newAudio);
-        }
-
+      const checkLi = () => {
         if (score > MAX_SCORE) {
           setCollapsedSystemPage(0);
           setQuestionnairePage(-1);
@@ -198,9 +189,60 @@ export default function SorollApp() {
         }
       };
 
+      const handleRight = () => {
+        setScore((score) => score + 1);
+
+        const overlayAudioUrl = getAudioPreguntaUrl(page);
+        const newAudio = new Audio(overlayAudioUrl);
+        newAudio.loop = true;
+        newAudio.volume = volume * AUDIO_VOLUME;
+        newAudio.play().catch(console.error);
+
+        // Add to our collection of audio instances
+        audioInstancesRef.current.push(newAudio);
+
+        checkLi();
+      };
+
+      const handleLeft = () => {
+        checkLi();
+      };
+
+      const handleKey = (e: KeyboardEvent) => {
+        switch (e.code) {
+          case "ArrowRight": {
+            handleRight();
+            break;
+          }
+          case "ArrowLeft": {
+            handleLeft();
+            break;
+          }
+        }
+      };
+
+      const handleClick = (event: MouseEvent) => {
+        const screenWidth = window.innerWidth;
+        const clickX = event.clientX;
+        const side = clickX < screenWidth / 2 ? "left" : "right";
+
+        switch (side) {
+          case "right": {
+            handleRight();
+            break;
+          }
+          case "left": {
+            handleLeft();
+            break;
+          }
+        }
+      };
+
       window.addEventListener("keydown", handleKey);
+      window.addEventListener("click", handleClick);
       return () => {
         window.removeEventListener("keydown", handleKey);
+        window.removeEventListener("click", handleClick);
       };
     }, [onPageChange, page, volume]);
 
@@ -242,16 +284,24 @@ export default function SorollApp() {
     useEffect(() => {
       if (page !== currentPage) return;
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const handleKey = (_e: unknown) => {
+      const nextPage = () => {
         setPage((page) => page + 1);
         if (onPageChange) onPageChange();
       };
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const handleKey = (e: KeyboardEvent) => {
+        if (e.code === "ArrowRight") nextPage();
+      };
+      const handleClick = () => {
+        nextPage();
+      };
+
       window.addEventListener("keydown", handleKey);
-      window.addEventListener("click", handleKey);
+      window.addEventListener("click", handleClick);
       return () => {
         window.removeEventListener("keydown", handleKey);
-        window.removeEventListener("click", handleKey);
+        window.removeEventListener("click", handleClick);
       };
     }, [page, onPageChange]);
 
@@ -283,10 +333,6 @@ export default function SorollApp() {
         onPageChange={() => setQuestionnairePage(0)}
       >
         <div className="flex flex-col gap-y-0">
-          <h2 className="text-4xl">COM NAVEGAR</h2>
-          <p className="text-2xl">Avançar: Premeu la tecla espai</p>
-          <p className="text-2xl">per passar a la següent pàgina.</p>
-          <br />
           <h2 className="text-4xl">COM RESPONDRE</h2>
           <p className="text-2xl">SI Premeu la fletxa dreta.</p>
           <p className="text-2xl">NO Premeu la fletxa esquerra.</p>
