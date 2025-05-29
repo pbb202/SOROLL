@@ -384,8 +384,19 @@ export default function SorollApp() {
           Quan va ser la ultima vegada que vas notar el silenci?
         </h1>
       </NonQuestionairePage>
+      <NonQuestionairePage page={2}>
+        <div className="w-[80vw] h-[80vh] m-auto -z-10">
+          <iframe
+            id="youtube-player"
+            className="w-full h-full border-none"
+            src="https://www.youtube.com/embed/-NHcK_7Kh5Y?autoplay=1&loop=0&mute=0&rel=0&modestbranding=1"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </NonQuestionairePage>
       <NonQuestionairePage
-        page={2}
+        page={3}
         onPageChange={() => setQuestionnairePage(0)}
       >
         <div className="flex flex-col gap-y-0">
